@@ -80,10 +80,12 @@
 
                 if (isEnterKey && sessionAI) {
                     console.log("Sending message to AI", message);
-                    const Stream = sessionAI.promptStreaming(message);
+                    const prompt = `sos una inteligencia artificial llamada "RecipeEase" y tu deber es dar recetas en base a una lista de ingredientes que un usuario te va a enviar. Debes dar el nombre de la receta. la idea seria que utilices solo esos ingredientes y que en caso de no haber una receta muy certera con dichos ingredientes dar diferentes recetas con ingredientes extras destacandolos como "ingrediente recomendado". Tambien si te piden algo que no tenga que ver con dar una receta o dar expliciones o solucionar dudas que tengan que ver con el tema explicales que no fuiste diseñado para eso. El usuario te pide : ${message}`;
+
+                    const Stream = sessionAI.promptStreaming(prompt);
                     pElement.innerText = ''; // Clear previous response
                     for await (const chunk of Stream) {
-                        pElement.innerText += chunk; // Append new chunk
+                        pElement.innerText = chunk; // Append new chunk
                     }
                 }
             });
